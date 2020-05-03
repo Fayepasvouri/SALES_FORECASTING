@@ -36,3 +36,27 @@ plt.ticklabel_format(style="plain", axis="x", scilimits=(0,1))
 plt.xlabel("Sales")
 plt.ylabel("Number_of_sales")
 plt.title("sales_distribution")
+
+print("skew is", store.SALES.skew()) #it gives 1.16
+print("kurtosis is" store.SALES.kurt()) # it gives 1.79
+
+num=store.select_dtypes(include=[np.number])
+print(num.dtypes)
+
+corr=num.corr()
+print(corr)
+
+f, ax =plt.subplots(figsize=(12,9))
+sns.heatmap(corr, vmax=1, square=True)
+
+sns.countplot(store.STATUS)
+
+YEAR_ID_pivot= \
+store.pivot_table(index="YEAR_ID", values="SALES", aggfunc=np.median)
+YEAR_ID_pivot.plot(kind="bar", color="pink", figsize=(12,7))
+plt.xlabel("year")
+plt.ylabel("sales")
+plt.title("sales per year")
+plt.xticks(rotation=0)
+plt.show()
+
